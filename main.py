@@ -40,7 +40,7 @@ with col1:
        
     metformindose = st.radio(
         "Metformin:",
-        ('Not taking', 'Below max dose', 'Max dose'))
+        ('Contraindicated or intolerant', 'Not taking yet', 'Below max dose', 'Max dose'))
 
     age = st.slider("Age:", min_value=18, max_value=100, value =50)
 
@@ -64,8 +64,9 @@ with col1:
 
     ishtn = st.checkbox('HTN: Select if treated for hypertension.')
 
+    isproteinuria = st.checkbox('Proteinuria: Select if at least over microalbuminuria threshold.')
 
-    issmoker = st.checkbox('Smoking: Select if the patient smokes.')
+    isretinopathy = st.checkbox('Retinopathy: Select if the patient has diabetic retinopathy.')
 
 
     isCAD = st.checkbox('CAD: Select if the patient has CAD.')
@@ -103,8 +104,11 @@ with col2:
 
     st.write(' ')
 
-if lasthba1c > goalhba1c:
-    nextstep1 = 'Increase Dose of Metformin!'
+if lasthba1c > goalhba1c and metformindose != 'Contraindicated or intolerant' and metformindose != 'Max dose':
+    if metformindose == 'Not taking yet':
+        nextstep1 = 'Start metformin!'
+    else:
+        nextstep1 = 'Increase metformin dose!'
     
 with col3:
 
@@ -115,7 +119,9 @@ with col3:
     
     st.write('Your selected goal HbA1c: ' + str(goalhba1c))
     
-    st.write('Your next steps: ' + str(nextstep1))
+    st.write('Your next steps: ')
+    
+    st.write('1. ' + str(nextstep1))
     
     
     st.title(str(round(riskpct,2)) + ' %')
