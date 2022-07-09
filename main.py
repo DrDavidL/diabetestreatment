@@ -1,6 +1,6 @@
 import streamlit as st
 import numpy as np
-from numpy import log as ln, mean
+from numpy import log as ln, mean, true_divide
 
 st.title("Diabetes Care")
 st.write('*DRAFT*')
@@ -56,9 +56,28 @@ with col1:
 
     st.write('The BMI calculates to ', round(bmi,1))
     
-    creatinine = st.slider("Last Creatinine", min_value=0.0, max_value = 15.0, value = 1.0)
+    # Blocking out creatinine for now and just using egfr. Will add back if needed
+    # creatinine = st.slider("Last Creatinine", min_value=0.0, max_value = 15.0, value = 1.0)
+    
+    # Set the egfr variable
     
     egfr = st.slider("Last eGFR", min_value= 0.0, max_value = 120.0, value = 59.0)
+    
+    # Determine if metformin is contra-indicated to continue based on egfr
+    
+    if egfr < 30:
+        metforminuse = False
+    else:
+        metforminuse = True
+        
+    # Determine if it's OK to dose escalate metformin
+    
+    if egfr < 45:
+        metforminescalate = False
+    else: 
+        metforminescalate = True
+ 
+        
 
     # Record whether the patient has HTN, smokes and has DM below. Sets to True. 
 
@@ -103,12 +122,23 @@ with col2:
     # Provide some spacing through use of an empty column.
 
     st.write(' ')
+    
+    # Here is the metformin logic.
+    # Based on eGFR and history variables: Don't start or escalate if < 45. Stop if already on and < 30.
 
-if lasthba1c > goalhba1c and metformindose != 'Contraindicated or intolerant' and metformindose != 'Max dose':
-    if metformindose == 'Not taking yet':
-        nextstep1 = 'Start metformin!'
-    else:
-        nextstep1 = 'Increase metformin dose!'
+
+    if lasthba1c > goalhba1c and metformindose != 'Contraindicated or intolerant' and metformindose != 'Max dose' and metforminescalate == True:
+        if metformindose == 'Not taking yet' and metforminuse == True:
+            nextstep1 = 'Start metformin!'
+        else:
+            if metforminescalate == True:
+                nextstep1 = 'Increase metformin dose!'
+    else: 
+        nextstep1 = "Nothing with metformin, at least!"          
+        
+    if metforminuse == False:
+        if metformindose == 'Max dose' or metformindose == 'Below max dose':
+            nextstep1 = "STOP METFORMIN -- check the eGFR value"
     
 with col3:
 
