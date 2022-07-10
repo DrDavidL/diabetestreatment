@@ -7,7 +7,7 @@ st.write('*DRAFT*')
 st.write('*DRAFT - NOT FOR CLINICAL USE - Not validated across input ranges*')
 # Set page two three columns. First for inputs, 2nd for spacing, and 3rd for outputs and explanation.
 
-col1, col2, col3 = st.columns([2,1,4])
+col1, col2, col3 = st.columns([6,1,4])
 
 with col1:
     
@@ -18,7 +18,7 @@ with col1:
     st.markdown('### First, define your goals!')
     goalhba1c = st.radio(
         "Please select a target HbA1c.",
-        ('</= 6', '</= 6.5', '</= 7', '</= 7.5', '</= 8', '</= 8.5', 'Over 8.5'))
+        ('</= 6', '</= 6.5', '</= 7', '</= 7.5', '</= 8', '</= 8.5'))
     
     if goalhba1c == '</= 6':
         goalhba1c = 6.0
@@ -32,15 +32,14 @@ with col1:
         goalhba1c = 8.0
     elif goalhba1c == '</= 8.5':
         goalhba1c = 8.5
+
     
     st.markdown('### Next, enter details about your patient!')
     
-    lasthba1c = st.slider("Select the last HbA1c", min_value= 3.0, max_value = 15.0, value = 7.0)
+    lasthba1c = st.slider("Select the most recent HbA1c", min_value= 3.0, max_value = 15.0, value = 7.0)
     
        
-    metformindose = st.radio(
-        "Metformin:",
-        ('Contraindicated or intolerant', 'Not taking yet', 'Below max dose', 'Max dose'))
+    
 
     age = st.slider("Age:", min_value=18, max_value=100, value =50)
 
@@ -53,8 +52,6 @@ with col1:
     # Standard formula for BMI in pounds/inches. Height/weight are more often known than BMI by a patient.
 
     bmi = 703 * weight / height**2
-
-    st.write('The BMI calculates to ', round(bmi,1))
     
     # Blocking out creatinine for now and just using egfr. Will add back if needed
     # creatinine = st.slider("Last Creatinine", min_value=0.0, max_value = 15.0, value = 1.0)
@@ -80,39 +77,93 @@ with col1:
         
 
     # Record whether the patient has HTN, smokes and has DM below. Sets to True. 
+    
+    is_cad = st.checkbox('CAD: Select if the patient has CAD.')
+    
+    is_cva = st.checkbox('CVA: Select if the patient had a stroke.')
+    
+    is_ckd = st.checkbox('CKD: Select if the patient has chronic kidney disease.')
+    
+    is_pad = st.checkbox('PAD: Select if the patient has peripheral arterial disease.')
+    
+    is_hf = st.checkbox('Heart Failure: Select if the patient has a hstory of heart failure.')
 
-    ishtn = st.checkbox('HTN: Select if treated for hypertension.')
+    is_htn = st.checkbox('HTN: Select if treated for hypertension.')
 
-    isproteinuria = st.checkbox('Proteinuria: Select if at least over microalbuminuria threshold.')
+    is_proteinuria = st.checkbox('Proteinuria: Select if at least over microalbuminuria threshold.')
 
-    isretinopathy = st.checkbox('Retinopathy: Select if the patient has diabetic retinopathy.')
+    is_retinopathy = st.checkbox('Retinopathy: Select if the patient has diabetic retinopathy.')
 
 
-    isCAD = st.checkbox('CAD: Select if the patient has CAD.')
+    
     
 
     # Set sex and race according to algorithm options available. 
 
     sex = st.radio(
-        "Please select a sex. (Note - limited to the options available in the published algorithm.) ",
+        "Please select sex assigned at birth.",
         ('female', 'male'))
 
-    race = st.radio(
-        "Please select a race. (Note - limited to the options available in the published algorithm.) ",
-        ('black', 'white'))
 
     # Enter other values required by algorithm. Use strealit sliders where possible. 
 
 
-    sbp = st.slider("Current systolic blood pressure in mm Hg.", min_value=80, max_value=200, value =120)
-
-    glucose = st.slider("Fasting glucose mg/dL.", min_value=60, max_value=300, value =100)
-
-    tchol = st.slider("Total cholesterol in mg/dL.", min_value=80, max_value=300, value =160)
+    ldl = st.slider("LDL cholesterol in mg/dL.", min_value=20, max_value=300, value =110)
 
     hdl = st.slider("HDL in mg/dL.", min_value=15, max_value=100, value =40)
+    
+    tg = st.slider("HDL in mg/dL.", min_value=30, max_value=1000, value =200)
+    
+    st.markdown('### Please enter existing treatments.')
+    
+    metformindose = st.radio(
+        "Metformin:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    
+    sulfonylureadose = st.radio(
+        "Sulfonylurea:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+        
+    meglitinidedose = st.radio(
+        "Meglitinide:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+            
+    thiazolidinedionedose = st.radio(
+        "Thiazolidinedione:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+                
+    aglucosidaseinhdose = st.radio(
+        "Alpha glucosidase inhibitor:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+                    
+    dpp4inhdose = st.radio(
+        "Dipeptidyl Peptidase-4 Inhibitor:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    
+    sgl2inhdose = st.radio(
+        "SGLT2 inhibitor:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    
+    glp1agonistdose = st.radio(
+        "GLP-1 agonist:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    
+    
+    acearbdose = st.radio(
+        "ACEI or ARB:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+        
+    statindose = st.radio(
+        "Statin:",
+        ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+        
+    aspirindose = st.radio(
+        "Aspirin",
+        ('Contraindicated or intolerant', 'Not taking daily', 'Taking daily'))
+        
+        
 
-    qrs = st.slider("QRS duration in msec.", min_value=55, max_value=200, value =100)
+
 
  
 
@@ -147,65 +198,84 @@ with col3:
 
     st.markdown('## *Diabetes Management Considerations:*')
     
-    st.write('Your selected goal HbA1c: ' + str(goalhba1c))
+    st.write('Your selected goal HbA1c: ', + goalhba1c)
     
     st.write('Your next steps: ')
     
     st.write('1. ' + str(nextstep1))
     
     
-    st.title(str(round(riskpct,2)) + ' %')
+    
 
     
 
     st.markdown('### Summary of inputs:')
+    
+    st.write('Goal A1c is: ', + goalhba1c)
 
     st.write('Age is: ' + str(age))
-    race
+  
     sex
     
-    st.write('Cr: ' + str(creatinine) + ' mg/dL')
+   #  st.write('Cr: ' + str(creatinine) + ' mg/dL')
     
     st.write('eGFR: ' + str(egfr) + ' mL/min/m^2')
     
-    if isCAD:
+    st.write('The BMI calculates to: ', round(bmi,1))
+    
+    if is_cad:
         st.write("With CAD")
     else:
         st.write("Without CAD")
 
-    if ishtn:
-        st.write("With treated HTN")
+    if is_cva:
+        st.write("With stroke history")
     else:
-        st.write("Without treated HTN")
+        st.write("Without stroke hstory")
+        
+    if is_ckd:
+        st.write("With chronic kidney disease")
+    else:
+        st.write("Without CKD")
+        
+    if is_pad:
+        st.write("With periperal arterial disease")
+    else:
+        st.write("Without PAD")
+        
+    if is_hf:
+        st.write("With heart failure history")
+    else:
+        st.write("Without heart failure history")
+        
+    if is_htn:
+        st.write("With HTN")
+    else:
+        st.write("Without HTN")
+    
+    
+    if is_proteinuria:
+        st.write("With proteinuria")
+    else:
+        st.write("Without proteinuria")          
+        
+    if is_retinopathy:
+        st.write("With diabetic retinopathy")
+    else:
+        st.write("Without diabetic retinopathy")          
     
     st.write('BMI is: ' + str(round(bmi,1)))
 
-    if issmoker:
-        st.write('Is a smoker')
-    else:
-        st.write('Is a non-smoker')
+    # if issmoker:
+    #     st.write('Is a smoker')
+    # else:
+    #     st.write('Is a non-smoker')
     
-    st.write('SBP: ' + str(sbp) + ' mmHg')
-    st.write('Total cholesterol: ' + str(tchol) + ' mg/dL')
+
+    st.write('LDL cholesterol: ' + str(ldl) + ' mg/dL')
     st.write('HDL: ' + str(hdl) + ' mg/dL')
-    st.write('QRS interval: ' + str(qrs) +' msec')
-
-    st.markdown('### Equation Details:')
+    
 
     
-    st.latex("Risk = 1 - S_{0}^{e^{(IndX - MeanCV)}}")
-
-    st.latex("S_{0} = survival\;(baseline)") 
-
-    st.latex("IndX = sum\;of\;(coefficient\;x\;value)") 
-
-    st.latex("MeanCV = Sex\;and\;race \;specific \;mean \;coefficient \;x \;value") 
-
-    st.markdown('*Reference*:')
-
-    st.markdown('Khan S, Ning H, Shah S, et al. 10-Year Risk Equations for Incident Heart Failure in the General Population. J Am Coll Cardiol. 2019 May, 73 (19) 2388-2397. https://doi.org/10.1016/j.jacc.2019.02.057')
-
-    st.markdown('Github URL: https://github.com/DrDavidL/pcp_hf')
-  
 
 
