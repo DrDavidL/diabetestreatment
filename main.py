@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 from numpy import log as ln, mean, true_divide
 
-st.title("Diabetes Care")
+st.title("Type 2 Diabetes Care")
 st.write('*DRAFT*')
 st.write('*DRAFT - NOT FOR CLINICAL USE - Not validated across input ranges*')
 # Set page two three columns. First for inputs, 2nd for spacing, and 3rd for outputs and explanation.
@@ -116,6 +116,8 @@ with col1:
     
     st.markdown('### Please enter existing treatments.')
     
+    is_insulin = st.checkbox('Insulin: Select if patient is taking insulin.')
+    
     metformindose = st.radio(
         "Metformin:",
         ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
@@ -193,7 +195,7 @@ with col2:
     
 with col3:
 
-    # Provide diabetes considerations!
+    # Provide diabetes care considerations!
 
 
     st.markdown('## *Diabetes Management Considerations:*')
@@ -222,6 +224,11 @@ with col3:
     st.write('eGFR: ' + str(egfr) + ' mL/min/m^2')
     
     st.write('The BMI calculates to: ', round(bmi,1))
+    
+    if is_insulin:
+        st.write("Taking Insulin")
+    else:
+        st.write("Not taking insulin")
     
     if is_cad:
         st.write("With CAD")
