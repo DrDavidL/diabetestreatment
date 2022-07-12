@@ -63,9 +63,9 @@ with col1:
     # Determine if metformin is contra-indicated to continue based on egfr
     
     if egfr < 30:
-        metforminuse = False
+        metformin_ok = False
     else:
-        metforminuse = True
+        metformin_ok = True
         
     # Determine if it's OK to dose escalate metformin
     
@@ -93,6 +93,8 @@ with col1:
     is_proteinuria = st.checkbox('Proteinuria: Select if at least over microalbuminuria threshold.')
 
     is_retinopathy = st.checkbox('Retinopathy: Select if the patient has diabetic retinopathy.')
+    
+    is_asian = st.checkbox('Select if the patient is Asian American (bmi threshold differences)')
 
 
     
@@ -176,22 +178,42 @@ with col2:
 
     st.write(' ')
     
+    #Below is where we calculate all the recommenations.
+    
+    nextsteps = []
+    
     # Here is the metformin logic.
     # Based on eGFR and history variables: Don't start or escalate if < 45. Stop if already on and < 30.
 
 
     if lasthba1c > goalhba1c and metformindose != 'Contraindicated or intolerant' and metformindose != 'Max dose' and metforminescalate == True:
-        if metformindose == 'Not taking yet' and metforminuse == True:
-            nextstep1 = 'Start metformin!'
+        if metformindose == 'Not taking yet' and metformin_ok == True:
+            metformin_rec = 'Start metformin!'
+            nextsteps.append(metformin_rec)
         else:
             if metforminescalate == True:
-                nextstep1 = 'Increase metformin dose!'
-    else: 
-        nextstep1 = "Nothing with metformin, at least!"          
+                metformin_rec = 'Increase metformin dose!'
+                nextsteps.append(metformin_rec)   
         
-    if metforminuse == False:
+    if metformin_ok == False:
         if metformindose == 'Max dose' or metformindose == 'Below max dose':
-            nextstep1 = "STOP METFORMIN -- check the eGFR value"
+            metformin_rec = "STOP METFORMIN -- check the eGFR value"
+            nextsteps.append(metformin_rec)
+            
+    # Here is weight loss surgery discussion with different cutoff for Asian American.
+    
+    considersurgery = False
+    
+    if bmi >= 40:
+        considersurgery = True
+    else:
+        if bmi >= 37.5 and is_asian == True:
+            considersurgery = True
+    
+    if considersurgery == True:
+        surgery_rec = 'Consider evaluation for weight loss surgery'
+        nextsteps.append(surgery_rec)
+    
     
 with col3:
 
@@ -202,14 +224,19 @@ with col3:
     
     st.write('Your selected goal HbA1c: ', + goalhba1c)
     
-    st.write('Your next steps: ')
+    st.write('CONSIDER: ')
     
-    st.write('1. ' + str(nextstep1))
+    i = 0
+    while i < len(nextsteps):
+        st.write(nextsteps[i])
+        i += 1 
     
     
     
 
-    
+    st.write('')
+    st.write('')
+    st.write('')
 
     st.markdown('### Summary of inputs:')
     
