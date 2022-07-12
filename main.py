@@ -17,7 +17,10 @@ st.write('*DRAFT - NOT FOR CLINICAL USE - Not validated across input ranges*')
     
     # Set A1c goals!
     
-st.sidebar.markdown('### First, define your goals!')
+
+
+st.sidebar.markdown('### Please enter parameters!')
+
 goalhba1c = st.sidebar.radio(
     "Please select a target HbA1c.",
     ('6.5', '7', '7.5', '8'))
@@ -33,7 +36,7 @@ elif goalhba1c == '8':
 
 
 
-st.sidebar.markdown('### Please enter scenario!')
+
 
 lasthba1c = st.sidebar.slider("Select the most recent HbA1c", min_value= 3.0, max_value = 15.0, value = 7.0)
 
