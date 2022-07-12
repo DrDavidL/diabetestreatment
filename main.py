@@ -191,7 +191,7 @@ nextsteps = []
 
 if lasthba1c > goalhba1c and metformindose != 'Contraindicated or intolerant' and metformindose != 'Max dose' and metforminescalate == True:
     if metformindose == 'Not taking' and metformin_ok == True:
-        metformin_rec = 'Start metformin: Above goal Hba1c, not yet taking it, and no contraindications. See benefits here: http://cnn.com'
+        metformin_rec = 'Start metformin: Above goal Hba1c, not yet taking it, and no contraindications.' 
         nextsteps.append(metformin_rec)
     else:
         if metforminescalate == True:
@@ -214,7 +214,7 @@ else:
         considersurgery = True
 
 if considersurgery == True:
-    surgery_rec = 'Consider evaluation for weight loss surgery. (BMI above race cutoff for consideration. Learn more here: http://cnn.com )'
+    surgery_rec = 'Consider evaluation for weight loss surgery: BMI above race-based cutoff for consideration.' 
     nextsteps.append(surgery_rec)
     
     
@@ -229,19 +229,15 @@ st.write('Your selected target HbA1c: ', + goalhba1c)
 
 st.write('Your most recent HbA1c: ', + lasthba1c)
 
-st.write('CONSIDER: ')
+
 
 i = 0
 while i < len(nextsteps):
-    st.write(nextsteps[i])
+    st.markdown('### *' + nextsteps[i] + '*')
     i += 1 
 
 
-
-
-st.write('')
-st.write('')
-st.write('')
+st.write("[Review evidence here.](https://professional.diabetes.org/sites/professional.diabetes.org/files/media/soc_2022_evidence_table.pdf)")
 
 # st.markdown('### Summary of inputs:')
 
