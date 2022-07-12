@@ -3,7 +3,7 @@ import numpy as np
 from numpy import log as ln, mean, true_divide
 
 st.title("Type 2 Diabetes Care")
-st.write('*DRAFT*')
+
 st.write('*DRAFT - NOT FOR CLINICAL USE - Not validated across input ranges*')
 # Set page two three columns. First for inputs, 2nd for spacing, and 3rd for outputs and explanation.
 
