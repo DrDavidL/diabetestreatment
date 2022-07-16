@@ -62,6 +62,8 @@ bmi = 703 * weight / height**2
 
 egfr = st.sidebar.slider("Last eGFR", min_value= 0.0, max_value = 120.0, value = 59.0)
 
+# Contraindications Section
+
 # Determine if metformin is contra-indicated to continue based on egfr
 
 if egfr < 30:
@@ -183,6 +185,7 @@ st.write(' ')
 #Below is where we calculate all the recommenations.
 
 nextsteps = []
+# When to use section.
 
 # Here is the metformin logic.
 # Based on eGFR and history variables: Don't start or escalate if < 45. Stop if already on and < 30.
@@ -205,7 +208,17 @@ if metformin_ok == False:
     if metformindose == 'Max dose' or metformindose == 'Below max dose':
         metformin_rec = "STOP METFORMIN -- check the eGFR value"
         nextsteps.append(metformin_rec)
-        
+
+# Here is DPP4 logic
+# If taking GLP-1 agonist and DPP4inh, the DPP4 should be stopped.
+
+if dpp4inhdose == "Below max dose" or dpp4inhdose == 'Max dose':
+    if glp1agonistdose == "Below max dose" or glp1agonistdose == 'Max dose':
+        dpp4inh_rec = "Stop DPP-4 inhibitor: The patient is on a GLP-1 agonist so there is no added benefit from the DPP-4 inhibitor."
+        nextsteps.append(dpp4inh_rec)
+            
+
+
 # Here is weight loss surgery discussion with different cutoff for Asian American.
 
 considersurgery = False
@@ -236,7 +249,7 @@ st.write('Your most recent HbA1c: ', + lasthba1c)
 
 i = 0
 while i < len(nextsteps):
-    st.markdown('### *' + nextsteps[i] + '*')
+    st.markdown('### ' + str(i+1) + ': ' + nextsteps[i])
     i += 1 
 
 
