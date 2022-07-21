@@ -233,7 +233,14 @@ if considersurgery == True:
     surgery_rec = 'Consider evaluation for weight loss surgery: BMI above race-based cutoff for consideration.' 
     nextsteps.append(surgery_rec)
     
-    
+# ACEI and ARB 
+# Still needs proteinuria and other renal ranges covered.
+
+if is_htn == True:
+    if acearbdose == "Not taking":
+        if egfr > 30 and egfr < 60:
+            acearb_rec = 'Consider addition of an ACEI or ARB for HTN control in CKD.'
+            nextsteps.append(acearb_rec)
 
 
 # Provide diabetes care considerations!
@@ -247,13 +254,17 @@ st.write('Your most recent HbA1c: ', + lasthba1c)
 
 
 
+
 i = 0
 while i < len(nextsteps):
     st.markdown('### ' + str(i+1) + ': ' + nextsteps[i])
     i += 1 
 
+st.write("Always reinforce [diet and exercise guidance.](https://www.niddk.nih.gov/health-information/diabetes/overview/diet-eating-physical-activity)")
 
-st.write("[Review evidence here.](https://professional.diabetes.org/sites/professional.diabetes.org/files/media/soc_2022_evidence_table.pdf)")
+st.write("Review evidence [here.](https://professional.diabetes.org/sites/professional.diabetes.org/files/media/soc_2022_evidence_table.pdf)")
+
+
 
 # st.markdown('### Summary of inputs:')
 
@@ -261,7 +272,7 @@ st.write("[Review evidence here.](https://professional.diabetes.org/sites/profes
 
 # st.write('Age is: ' + str(age))
 
-# sex
+# sexß
 
 # #  st.write('Cr: ' + str(creatinine) + ' mg/dL')
 
