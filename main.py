@@ -239,7 +239,7 @@ if considersurgery == True:
 if is_htn == True:
     if acearbdose == "Not taking":
         if egfr > 30 and egfr < 60:
-            acearb_rec = 'Consider addition of an ACEI or ARB for HTN control in CKD.'
+            acearb_rec = 'Consider addition of an ACEI or ARB for HTN management in CKD.'
             nextsteps.append(acearb_rec)
 
 
