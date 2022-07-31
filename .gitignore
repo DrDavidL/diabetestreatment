@@ -1,0 +1,2 @@
+# Ignore Password File
+.streamlit/secrets.toml
