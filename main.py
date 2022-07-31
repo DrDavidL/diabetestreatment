@@ -71,6 +71,11 @@ if egfr < 30:
 else:
     metformin_ok = True
     
+if egfr < 30:
+    sglt2i_ok = False
+else:
+    sglt2i_ok = True
+    
 # Determine if it's OK to dose escalate metformin
 
 if egfr < 45:
@@ -144,11 +149,11 @@ aglucosidaseinhdose = st.sidebar.radio(
     "Alpha glucosidase inhibitor:",
     ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
                 
-dpp4inhdose = st.sidebar.radio(
+dpp4idose = st.sidebar.radio(
     "Dipeptidyl Peptidase-4 Inhibitor:",
     ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
 
-sgl2inhdose = st.sidebar.radio(
+sglt2idose = st.sidebar.radio(
     "SGLT2 inhibitor:",
     ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
 
@@ -208,14 +213,35 @@ if metformin_ok == False:
     if metformindose == 'Max dose' or metformindose == 'Below max dose':
         metformin_rec = "STOP METFORMIN -- check the eGFR value"
         nextsteps.append(metformin_rec)
+        
+# SGLT2i logic
+
+if lasthba1c > goalhba1c and sglt2idose != 'Contraindicated or intolerant' and sglt2idose != 'Max dose' and sglt2i_ok == True:
+    if sglt2idose == 'Not taking':
+        sglt2i_rec = 'Start SGLT2 inhibitor (CHECK specific SGLT2i for eGFR dosing guidance.) Rationale: Above goal Hba1c, not yet taking it, and no contraindications.' 
+        nextsteps.append(sglt2i_rec)
+        if is_ckd == True or egfr < 60:
+            sglt2i_rec = "SGLT2 inhibitor also suggested for reason of CKD"
+            nextsteps.append(sglt2i_rec)
+        if is_hf == True:
+            sglt2i_rec = "SGLT2 inhibitor also suggested for reason of heart failure"
+            nextsteps.append(sglt2i_rec)
+    if sglt2idose == 'Below max dose':
+         sglt2i_rec = "Increase SGLT2 inhibitor dose."
+         nextsteps.append(sglt2i_rec)   
+
+if sglt2i_ok == False:
+    if sglt2idose == 'Max dose' or sglt2idose == 'Below max dose':
+        sglt2i_rec = "Check whether the specific SGLT2i should continue with current eGFR."
+        nextsteps.append(sglt2i_rec)
 
 # Here is DPP4 logic
 # If taking GLP-1 agonist and DPP4inh, the DPP4 should be stopped.
 
-if dpp4inhdose == "Below max dose" or dpp4inhdose == 'Max dose':
+if dpp4idose == "Below max dose" or dpp4idose == 'Max dose':
     if glp1agonistdose == "Below max dose" or glp1agonistdose == 'Max dose':
-        dpp4inh_rec = "Stop DPP-4 inhibitor: The patient is on a GLP-1 agonist so there is no added benefit from the DPP-4 inhibitor."
-        nextsteps.append(dpp4inh_rec)
+        dpp4i_rec = "Stop DPP-4 inhibitor: The patient is on a GLP-1 agonist so there is no added benefit from the DPP-4 inhibitor."
+        nextsteps.append(dpp4i_rec)
             
 
 
