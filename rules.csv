@@ -1,0 +1,4 @@
+Agent, condition, outcome
+metformin, if egfr > 30, OK to use
+metformin, if egfr > 45, OK to escalate
+metformin, last A1c > goal AND NOT contraindicated/intolerant AND NOT max dose AND OK to esalate, 

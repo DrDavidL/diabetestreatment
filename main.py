@@ -202,11 +202,11 @@ nextsteps = []
 
 if lasthba1c > goalhba1c and metformindose != 'Contraindicated or intolerant' and metformindose != 'Max dose' and metforminescalate == True:
     if metformindose == 'Not taking' and metformin_ok == True:
-        metformin_rec = 'Start metformin: Above goal Hba1c, not yet taking it, and no contraindications.' 
+        metformin_rec = 'Consider starting metformin: Above goal Hba1c, not yet taking it, and no contraindications.' 
         nextsteps.append(metformin_rec)
     else:
         if metforminescalate == True:
-            metformin_rec = 'Increase metformin dose!'
+            metformin_rec = 'Consider increasing metformin dose.'
             nextsteps.append(metformin_rec)   
     
 if metformin_ok == False:
@@ -218,7 +218,7 @@ if metformin_ok == False:
 
 if lasthba1c > goalhba1c and sglt2idose != 'Contraindicated or intolerant' and sglt2idose != 'Max dose' and sglt2i_ok == True:
     if sglt2idose == 'Not taking':
-        sglt2i_rec = 'Start SGLT2 inhibitor (CHECK specific SGLT2i for eGFR dosing guidance.) Rationale: Above goal Hba1c, not yet taking it, and no contraindications.' 
+        sglt2i_rec = 'Consider starting an SGLT2 inhibitor (CHECK specific SGLT2i for eGFR dosing guidance.) Rationale: Above goal Hba1c, not yet taking it, and no contraindications.' 
         nextsteps.append(sglt2i_rec)
         if is_ckd == True or egfr < 60:
             sglt2i_rec = "SGLT2 inhibitor also suggested for reason of CKD"
@@ -227,8 +227,8 @@ if lasthba1c > goalhba1c and sglt2idose != 'Contraindicated or intolerant' and s
             sglt2i_rec = "SGLT2 inhibitor also suggested for reason of heart failure"
             nextsteps.append(sglt2i_rec)
     if sglt2idose == 'Below max dose':
-         sglt2i_rec = "Increase SGLT2 inhibitor dose."
-         nextsteps.append(sglt2i_rec)   
+        sglt2i_rec = "Consider increasing SGLT2 inhibitor dose."
+        nextsteps.append(sglt2i_rec)   
 
 if sglt2i_ok == False:
     if sglt2idose == 'Max dose' or sglt2idose == 'Below max dose':
