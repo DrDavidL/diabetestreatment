@@ -48,7 +48,7 @@ st.write('***IN PROGRESS DRAFT - NOT FOR CLINICAL USE***')
     
     # Set A1c goals!
     
-
+is_possible_pregnant = st.sidebar.checkbox('Possibly Pregnant: Select if the patient is possibly pregnant.')
 
 st.sidebar.markdown('### Please enter parameters!')
 
@@ -231,6 +231,7 @@ nextsteps = []
         
 
 
+
 if lasthba1c > goalhba1c and metformindose != 'Contraindicated or intolerant' and metformindose != 'Max dose' and metforminescalate == True:
     if metformindose == 'Not taking' and metformin_ok == True:
         metformin_rec = 'Consider starting metformin: Above goal Hba1c, not yet taking it, and no contraindications.' 
@@ -310,7 +311,10 @@ st.write('Your selected target HbA1c: ', + goalhba1c)
 st.write('Your most recent HbA1c: ', + lasthba1c)
 
 
-
+if is_possible_pregnant == True:
+    possible_preg_rec = 'Recommendations through this tool are not yet possible for pregnant or possibly pregnant patients.'
+    nextsteps= []
+    nextsteps.append(possible_preg_rec)
 
 i = 0
 while i < len(nextsteps):
