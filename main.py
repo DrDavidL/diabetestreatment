@@ -48,7 +48,7 @@ st.write('***IN PROGRESS DRAFT - NOT FOR CLINICAL USE***')
     
     # Set A1c goals!
     
-is_possible_pregnant = st.sidebar.checkbox('Possibly Pregnant: Select if the patient is possibly pregnant.')
+is_possible_pregnant = st.sidebar.checkbox('Select if pregnant, possibly pregnant, or considering pregnancy.')
 
 st.sidebar.markdown('### Please enter parameters!')
 
