@@ -39,26 +39,11 @@ from numpy import log as ln, mean, true_divide
 
 
 
-
-
-
-
-
-
-
-
-
 st.title("Type 2 Diabetes Scenario Tool")
 
 st.write('***IN PROGRESS DRAFT - NOT FOR CLINICAL USE***')
 
-
-
-
-
-
-
-    
+  
     # Pick a goal first!
     
     # Set A1c goals!
