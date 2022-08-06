@@ -276,6 +276,8 @@ if dpp4idose == "Below max dose" or dpp4idose == 'Max dose':
     if glp1agonistdose == "Below max dose" or glp1agonistdose == 'Max dose':
         dpp4i_rec = "Stop DPP-4 inhibitor: The patient is on a GLP-1 agonist so there is no added benefit from the DPP-4 inhibitor."
         nextsteps.append(dpp4i_rec)
+
+# Needs intolerant logic for metformin and SGLT2i.
             
 if dpp4idose == "Not taking" or dpp4idose == 'Below max dose':
     if lasthba1c > goalhba1c and sglt2idose == 'Max dose' and metformindose == 'Max dose' and glp1agonistdose == 'Contraindicated or intolerant':
@@ -298,7 +300,7 @@ else:
         considersurgery = True
 
 if considersurgery == True:
-    surgery_rec = 'Consider evaluation for weight loss surgery: BMI above race-based cutoff for consideration.' 
+    surgery_rec = 'Consider evaluation for weight loss surgery. RATIONALE: BMI above race-based cutoff for consideration.' 
     nextsteps.append(surgery_rec)
     
 # ACEI and ARB 
