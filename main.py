@@ -236,32 +236,32 @@ nextsteps = []
 
 if lasthba1c > goalhba1c and metformindose != 'Contraindicated or intolerant' and metformindose != 'Max dose' and metforminescalate == True:
     if metformindose == 'Not taking' and metformin_ok == True:
-        metformin_rec = 'Consider starting metformin: Above goal Hba1c, not yet taking it, and no contraindications.' 
+        metformin_rec = 'Consider starting metformin. RATIONALE: Above goal Hba1c, not yet taking it, and no contraindications.' 
         nextsteps.append(metformin_rec)
     else:
         if metforminescalate == True:
-            metformin_rec = 'Consider increasing metformin dose.'
+            metformin_rec = 'Consider increasing metformin dose. RATIONALE: Above goal Hba1c and submaximal metformin dose.'
             nextsteps.append(metformin_rec)   
     
 if metformin_ok == False:
     if metformindose == 'Max dose' or metformindose == 'Below max dose':
-        metformin_rec = "STOP METFORMIN -- check the eGFR value"
+        metformin_rec = "STOP METFORMIN -- check the eGFR value!"
         nextsteps.append(metformin_rec)
         
 # SGLT2i logic
 
 if lasthba1c > goalhba1c and sglt2idose != 'Contraindicated or intolerant' and sglt2idose != 'Max dose' and sglt2i_ok == True:
     if sglt2idose == 'Not taking':
-        sglt2i_rec = 'Consider starting an SGLT2 inhibitor (CHECK specific SGLT2i for eGFR dosing guidance.) Rationale: Above goal Hba1c, not yet taking it, and no contraindications.' 
+        sglt2i_rec = 'Consider starting an SGLT2 inhibitor (CHECK specific SGLT2i for eGFR dosing guidance.) RATIONALE: Above goal Hba1c, not yet taking it, and no contraindications.' 
         nextsteps.append(sglt2i_rec)
         if is_ckd == True or egfr < 60:
-            sglt2i_rec = "SGLT2 inhibitor also suggested for reason of CKD"
+            sglt2i_rec = "SGLT2 inhibitor also suggested for reason of CKD."
             nextsteps.append(sglt2i_rec)
         if is_hf == True:
-            sglt2i_rec = "SGLT2 inhibitor also suggested for reason of heart failure"
+            sglt2i_rec = "SGLT2 inhibitor also suggested for reason of heart failure."
             nextsteps.append(sglt2i_rec)
     if sglt2idose == 'Below max dose':
-        sglt2i_rec = "Consider increasing SGLT2 inhibitor dose."
+        sglt2i_rec = "Consider increasing SGLT2 inhibitor dose. RATIONALE: Above goal Hba1c, submaximal dose, and no contraindications."
         nextsteps.append(sglt2i_rec)   
 
 if sglt2i_ok == False:
@@ -278,12 +278,12 @@ if dpp4idose == "Below max dose" or dpp4idose == 'Max dose':
         nextsteps.append(dpp4i_rec)
             
 if dpp4idose == "Not taking" or dpp4idose == 'Below max dose':
-    if lasthba1c > goalhba1c and sglt2idose == 'Max dose' and metformindose == 'Max dose' and glp1agonistdose == 'Contraindicated or Intolerant':
+    if lasthba1c > goalhba1c and sglt2idose == 'Max dose' and metformindose == 'Max dose' and glp1agonistdose == 'Contraindicated or intolerant':
         if dpp4idose == 'Not taking':
-            dpp4i_rec = "Consider starting a DPP-4 inhibitor. Metformin dose is max, SGLT2i dose is max and adding a GLP-1 agonist is not possible."
+            dpp4i_rec = "Consider starting a DPP-4 inhibitor. RATIONALE: Metformin dose is max, SGLT2i dose is max and adding a GLP-1 agonist is not possible."
             nextsteps.append(dpp4i_rec)
         if dpp4i_rec == 'Below max dose':
-            dpp4i_rec = "Consider increasing the DPP-4 inhibitor dose. Metformin dose is max, SGLT2i dose is max and adding a GLP-1 agonist is not possible."
+            dpp4i_rec = "Consider increasing the DPP-4 inhibitor dose. RATIONALE: Metformin dose is max, SGLT2i dose is max and adding a GLP-1 agonist is not possible."
             nextsteps.append(dpp4i_rec)
         
 
