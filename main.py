@@ -277,7 +277,15 @@ if dpp4idose == "Below max dose" or dpp4idose == 'Max dose':
         dpp4i_rec = "Stop DPP-4 inhibitor: The patient is on a GLP-1 agonist so there is no added benefit from the DPP-4 inhibitor."
         nextsteps.append(dpp4i_rec)
             
-
+if dpp4idose == "Not taking" or dpp4idose == 'Below max dose':
+    if lasthba1c > goalhba1c and sglt2idose == 'Max dose' and metformindose == 'Max dose' and glp1agonistdose == 'Contraindicated or Intolerant':
+        if dpp4idose == 'Not taking':
+            dpp4i_rec = "Consider starting a DPP-4 inhibitor. Metformin dose is max, SGLT2i dose is max and adding a GLP-1 agonist is not possible."
+            nextsteps.append(dpp4i_rec)
+        if dpp4i_rec == 'Below max dose':
+            dpp4i_rec = "Consider increasing the DPP-4 inhibitor dose. Metformin dose is max, SGLT2i dose is max and adding a GLP-1 agonist is not possible."
+            nextsteps.append(dpp4i_rec)
+        
 
 # Here is weight loss surgery discussion with different cutoff for Asian American.
 
@@ -298,9 +306,11 @@ if considersurgery == True:
 
 if is_htn == True:
     if acearbdose == "Not taking":
-        if egfr > 30 and egfr < 60:
-            acearb_rec = 'Consider addition of an ACEI or ARB for HTN management in CKD.'
+        if egfr > 20 and egfr < 60:
+            acearb_rec = 'Consider addition of an ACEI or ARB for HTN management in CKD. Dose adjust for eGFR per individual agent.'
             nextsteps.append(acearb_rec)
+
+
 
 
 # Provide diabetes care considerations!
