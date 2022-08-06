@@ -230,9 +230,6 @@ nextsteps = []
 
 # if lasthba1c > goalhba1c:
 #     if metformin_ok == True and metforminescalate == True and metformindose == 'Not taking yet':
-        
-
-
 
 if lasthba1c > goalhba1c and metformindose != 'Contraindicated or intolerant' and metformindose != 'Max dose' and metforminescalate == True:
     if metformindose == 'Not taking' and metformin_ok == True:
@@ -247,6 +244,23 @@ if metformin_ok == False:
     if metformindose == 'Max dose' or metformindose == 'Below max dose':
         metformin_rec = "STOP METFORMIN -- check the eGFR value!"
         nextsteps.append(metformin_rec)
+        
+# GLP1 Logic
+
+if lasthba1c > goalhba1c and glp1agonistdose != 'Contraindicated or intolerant' and glp1agonistdose != 'Max dose':
+    if glp1agonistdose == 'Not taking' and metformindose =='Max dose' and dpp4idose == 'Not taking':
+        glp1agonist_rec = 'Consider starting a GLP-1 agonist. RATIONALE: Above goal Hba1c, metformin is at maximal dose, and no use of DPP-4 inhibitor.' 
+        nextsteps.append(glp1agonist_rec)
+        if is_ckd == True or egfr < 60:
+            glp1agonist_rec = "GLP-1 agonist also suggested for reason of CKD."
+            nextsteps.append(glp1agonist_rec)
+        if bmi > 30:
+            glp1agonist_rec = "GLP-1 agonist also suggested for reason of obesity."
+            nextsteps.append(glp1agonist_rec)
+    if glp1agonistdose == 'Below max dose':
+        glp1agonist_rec = "Consider increasing GLP-1 agonist dose. RATIONALE: Above goal Hba1c, submaximal dose, and no contraindications."
+        nextsteps.append(glp1agonist_rec)   
+
         
 # SGLT2i logic
 
