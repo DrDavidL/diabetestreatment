@@ -164,48 +164,48 @@ is_insulin = st.sidebar.checkbox('Insulin: Select if patient is taking insulin.'
 
 metformindose = st.sidebar.radio(
     "Metformin:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
 
 sulfonylureadose = st.sidebar.radio(
     "Sulfonylurea:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
     
 meglitinidedose = st.sidebar.radio(
     "Meglitinide:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
         
 thiazolidinedionedose = st.sidebar.radio(
     "Thiazolidinedione:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
             
 aglucosidaseinhdose = st.sidebar.radio(
     "Alpha glucosidase inhibitor:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
                 
 dpp4idose = st.sidebar.radio(
     "Dipeptidyl Peptidase-4 Inhibitor:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
 
 sglt2idose = st.sidebar.radio(
     "SGLT2 inhibitor:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
 
 glp1agonistdose = st.sidebar.radio(
     "GLP-1 agonist:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
 
 
 acearbdose = st.sidebar.radio(
     "ACEI or ARB:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
     
 statindose = st.sidebar.radio(
     "Statin:",
-    ('Contraindicated or intolerant', 'Not taking', 'Below max dose', 'Max dose'))
+    ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
     
 aspirindose = st.sidebar.radio(
     "Aspirin",
-    ('Contraindicated or intolerant', 'Not taking daily', 'Taking daily'))
+    ('Not taking daily', 'Taking daily', 'Contraindicated or intolerant'))
         
         
 
@@ -332,12 +332,36 @@ if is_htn == True:
 # Provide diabetes care considerations!
 
 
-st.markdown('## *Scenario Considerations:*')
+st.markdown('## *Goal and Existing Medications:*')
 
-st.write('Your selected target HbA1c: ', + goalhba1c)
+st.write('Target HbA1c: ', + goalhba1c)
 
-st.write('Your most recent HbA1c: ', + lasthba1c)
+st.write('Most recent HbA1c: ', + lasthba1c)
 
+
+st.write('Current DM Medication Class Status:')
+
+if is_insulin == True:
+    st.markdown(' - ***Insulin:*** Taking')
+else:
+    st.markdown(' - ***Insulin:*** Not taking')
+
+st.markdown(' - ***Metformin:***  ' + metformindose)
+st.markdown(' - ***SGLT2 inh:***  ' + sglt2idose)
+st.markdown(' - ***GLP-1 agonist:***  ' + glp1agonistdose)
+st.markdown(' - ***DPP-4 inh:***  ' + dpp4idose)
+st.markdown(' - ***Meglitinide:***  ' + meglitinidedose)
+st.markdown(' - ***Sulfonylurea:***  ' + sulfonylureadose)
+st.markdown(' - ***Alpha-glucosidase inh:***  ' + aglucosidaseinhdose)
+st.markdown(' - ***Thiazolidinedione:***  ' + thiazolidinedionedose)
+
+st.write('Additional Medications of Interest:')
+
+st.markdown(' - ***ACEi or ARB:***  ' + acearbdose)
+st.markdown(' - ***Statin:***  ' + statindose)
+st.markdown(' - ***Aspirin:***  ' + aspirindose)
+
+st.markdown('## *Care Considerations:*')
 
 if is_possible_pregnant == True:
     possible_preg_rec = 'Recommendations through this tool are not yet possible for pregnant or possibly pregnant patients.'
