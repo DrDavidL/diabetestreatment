@@ -80,13 +80,15 @@ age = st.sidebar.slider("Age:", min_value=18, max_value=100, value =50)
 
 # weight = st.number_input('Enter weight in pounds', min_value=75.0, max_value=400.0, value = 160., step = 1.)
 
-weight = st.sidebar.slider("Weight (pounds)", min_value=70, max_value=500, value =150)
+weight = st.sidebar.slider("Weight (pounds)", min_value=70, max_value=500, value =180)
 
-height = st.sidebar.slider("Height (inches)", min_value=36, max_value=96, value =65)
+height = st.sidebar.slider("Height (inches)", min_value=36, max_value=96, value =67)
 
 # Standard formula for BMI in pounds/inches. Height/weight are more often known than BMI by a patient.
 
 bmi = 703 * weight / height**2
+
+st.sidebar.write('Calculated BMI is: ', round(bmi,1), 'If only BMI known, adjust values as needed to match current BMI.')
 
 # Blocking out creatinine for now and just using egfr. Will add back if needed
 # creatinine = st.slider("Last Creatinine", min_value=0.0, max_value = 15.0, value = 1.0)
