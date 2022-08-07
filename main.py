@@ -56,7 +56,7 @@ is_possible_pregnant = st.sidebar.checkbox('Select if pregnant, possibly pregnan
 
 goalhba1c = st.sidebar.radio(
     "Please select a target HbA1c.",
-    ('6.5', '7', '7.5', '8'))
+    ('6.5', '7', '7.5', '8'), index = 1)
 
 if goalhba1c == '6.5':
     goalhba1c = 6.5
@@ -71,7 +71,7 @@ elif goalhba1c == '8':
 
 
 
-lasthba1c = st.sidebar.slider("Select the most recent HbA1c", min_value= 3.0, max_value = 15.0, value = 7.0)
+lasthba1c = st.sidebar.slider("Select the most recent HbA1c", min_value= 3.0, max_value = 15.0, value = 7.5)
 
     
 
