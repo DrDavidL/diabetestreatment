@@ -334,7 +334,25 @@ if is_htn == True:
 # Provide diabetes care considerations!
 
 
-st.markdown('## *Goal and Existing Medications:*')
+st.markdown('## *Care Considerations:*')
+
+if is_possible_pregnant == True:
+    possible_preg_rec = 'Recommendations through this tool are not yet possible for pregnant or possibly pregnant patients.'
+    nextsteps= []
+    nextsteps.append(possible_preg_rec)
+
+i = 0
+while i < len(nextsteps):
+    st.markdown('### ' + str(i+1) + ': ' + nextsteps[i])
+    i += 1 
+
+st.write("Always reinforce [diet and exercise guidance.](https://www.niddk.nih.gov/health-information/diabetes/overview/diet-eating-physical-activity)")
+
+st.write("Review evidence [here.](https://professional.diabetes.org/sites/professional.diabetes.org/files/media/soc_2022_evidence_table.pdf)")
+
+
+
+st.markdown('## *Summary for Goal and Existing Medications Prior to any Actions Above:*')
 
 st.write('Target HbA1c: ', + goalhba1c)
 
@@ -362,23 +380,6 @@ st.write('Additional Medications of Interest:')
 st.markdown(' - ***ACEi or ARB:***  ' + acearbdose)
 st.markdown(' - ***Statin:***  ' + statindose)
 st.markdown(' - ***Aspirin:***  ' + aspirindose)
-
-st.markdown('## *Care Considerations:*')
-
-if is_possible_pregnant == True:
-    possible_preg_rec = 'Recommendations through this tool are not yet possible for pregnant or possibly pregnant patients.'
-    nextsteps= []
-    nextsteps.append(possible_preg_rec)
-
-i = 0
-while i < len(nextsteps):
-    st.markdown('### ' + str(i+1) + ': ' + nextsteps[i])
-    i += 1 
-
-st.write("Always reinforce [diet and exercise guidance.](https://www.niddk.nih.gov/health-information/diabetes/overview/diet-eating-physical-activity)")
-
-st.write("Review evidence [here.](https://professional.diabetes.org/sites/professional.diabetes.org/files/media/soc_2022_evidence_table.pdf)")
-
 
 
 # st.markdown('### Summary of inputs:')
