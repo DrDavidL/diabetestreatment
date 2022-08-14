@@ -73,10 +73,90 @@ elif goalhba1c == '8':
 
 lasthba1c = st.sidebar.slider("Select the most recent HbA1c", min_value= 3.0, max_value = 15.0, value = 7.5)
 
+# Pooled Cohort ASCVD Risk Calculation Components
     
+sex = st.sidebar.radio(
+        "Please select a sex assigned at birth.",
+        ('female', 'male'))
+race = st.sidebar.radio(
+    "Please select a race for ASCVD pooled cohort risk equation. (Note - limited to the options available in the published algorithm.) ",
+    ('black', 'white', 'other'))
 
+is_asian = st.sidebar.checkbox('Select if the patient is Asian American (bmi threshold differences)')
 
 age = st.sidebar.slider("Age:", min_value=18, max_value=100, value =50)
+
+tchol = st.sidebar.slider("Total cholesterol in mg/dL.", min_value=80, max_value=320, value =160)
+
+
+ldl = st.sidebar.slider("LDL cholesterol in mg/dL.", min_value=20, max_value=300, value =110)
+
+tg = st.sidebar.slider("Triglycerides in mg/dL.", min_value=30, max_value=1000, value =200)
+
+hdl = st.sidebar.slider("HDL in mg/dL.", min_value=15, max_value=100, value =40)
+
+sbp = st.sidebar.slider("Current systolic blood pressure in mm Hg.", min_value=80, max_value=200, value =120)
+
+is_htn = st.sidebar.checkbox('HTN: Select if treated for hypertension.')
+
+issmoker = st.sidebar.checkbox('Smoking: Select if the patient smokes.')
+
+
+isdiabetes = st.sidebar.checkbox('DM: Select if the patient has diabetes.', value = True)
+
+features = {1: ln(age), 2: ln(age)**2, 3: ln(tchol), 4: ln(age)*ln(tchol), 5: ln(hdl), 6: ln(age)*ln(hdl), 
+            7: (is_htn + 0)*ln(sbp), 8: (is_htn +0)*ln(age)*ln(sbp), 9: ((not is_htn) + 0)*ln(sbp), 10: ((not is_htn) + 0)*ln(age)*ln(sbp), 11: (issmoker+0),
+            12: ln(age)*(issmoker+0), 13: (isdiabetes+0) }
+
+coeff = {1: (17.114, -29.799, 2.469, 12.344), 2: (0, 4.884, 0, 0), 3: (0.94, 13.54, 0.302, 11.853), 4: (0, -3.114, 0, -2.664),
+5: (-18.92, -13.578,  -0.307, -7.99), 6: (4.475, 3.149, 0, 1.769), 7: (29.291, 2.019, 1.916, 1.797),  8: (-6.432, 0, 0, 0),
+9: (27.82, 1.957, 1.809, 1.764), 10: (-6.087, 0, 0, 0), 11: (0.691, 7.574, 0.549, 7.837), 12: (0,  -1.665, 0, -1.795),
+13: (0.874, 0.661,  0.645,  0.658)}
+
+MeanTerms = [86.61, -29.18, 19.54, 61.18]
+
+s10 = [0.9533, 0.9665, 0.8954, 0.9144]
+
+if sex == 'female' and race == 'black':
+    flex = 0
+elif sex == 'female' and race != 'black':
+    flex = 1
+elif sex == 'male' and race == 'black':
+    flex = 2
+else:
+    flex = 3
+
+sex_race_coeff = {}
+
+templist = []
+for key in coeff:
+    templist = coeff[key]
+    sex_race_coeff[key] = templist[flex]
+    
+coefxvalue = {}
+for key in features:
+    coefxvalue[key] = features[key] * sex_race_coeff[key]
+    
+sum_coefxvalue = sum(coefxvalue.values())
+
+s10_value = s10[flex]
+
+MeanTerms_value = MeanTerms[flex]
+
+ten_yr_risk = 100* (1- (s10_value)**(2.7182818**(sum_coefxvalue-MeanTerms_value)))
+
+if 19 < age < 80 and 89 < sbp < 201 and 129 < tchol < 321 and 19 < hdl < 101:
+    st.sidebar.write('Calculated 10 year ASCVD risk is: ', round(ten_yr_risk,1))
+elif 20 > age or 80 < age:
+    st.sidebar.write('Age is outside 20-80 range for ASCVD risk calculation.')
+elif 90 > sbp or 200 < sbp:
+    st.sidebar.write('SBP is outside 90-200 mmHg range for ASCVD risk calculation.')
+elif 130 > tchol or 320 < tchol:
+    st.sidebar.write('Total cholesterol is outside 130-320 mg/dL range for ASCVD risk calculation.')
+elif 20 > hdl or 100 < hdl:
+    st.sidebar.write('HDL cholesterol is outside 20-100 mg/dL range for ASCVD risk calculation.')
+
+# st.sidebar.write('Calculated 10 year ASCVD risk is: ', round(ten_yr_risk,1))
 
 # weight = st.number_input('Enter weight in pounds', min_value=75.0, max_value=400.0, value = 160., step = 1.)
 
@@ -132,33 +212,20 @@ is_pad = st.sidebar.checkbox('PAD: Select if the patient has peripheral arterial
 
 is_hf = st.sidebar.checkbox('Heart Failure: Select if the patient has a hstory of heart failure.')
 
-is_htn = st.sidebar.checkbox('HTN: Select if treated for hypertension.')
-
 is_proteinuria = st.sidebar.checkbox('Proteinuria: Select if at least over microalbuminuria threshold.')
 
 is_retinopathy = st.sidebar.checkbox('Retinopathy: Select if the patient has diabetic retinopathy.')
 
-is_asian = st.sidebar.checkbox('Select if the patient is Asian American (bmi threshold differences)')
 
 
 
 
 
-# Set sex and race according to algorithm options available. 
-
-sex = st.sidebar.radio(
-    "Please select sex assigned at birth.",
-    ('female', 'male'))
 
 
-# Enter other values required by algorithm. Use strealit sliders where possible. 
+# Enter other values required by algorithm. Use streamlit sliders where possible. 
 
 
-ldl = st.sidebar.slider("LDL cholesterol in mg/dL.", min_value=20, max_value=300, value =110)
-
-hdl = st.sidebar.slider("HDL in mg/dL.", min_value=15, max_value=100, value =40)
-
-tg = st.sidebar.slider("HDL in mg/dL.", min_value=30, max_value=1000, value =200)
 
 
 
@@ -328,8 +395,26 @@ if is_htn == True:
             acearb_rec = 'Consider addition of an ACEI or ARB for HTN management in CKD. Dose adjust for eGFR per individual agent.'
             nextsteps.append(acearb_rec)
 
+# Aspirin Recs
 
+if ten_yr_risk > 10 and aspirindose == 'Not taking daily' and is_cad == False and 39 < age < 60:
+    aspirin_rec = 'Discuss with patient regarding daily aspirin for primary ASCVD prevention. The 10 year ASCVD risk is above 10 AND age is 40 - 59.'
+    nextsteps.append(aspirin_rec)
+    
+if aspirindose == 'Not taking daily' and is_cad == True:
+    aspirin_rec = 'Given CAD, consider adding aspirin for secondary ASCVD prevention.'
+    nextsteps.append(aspirin_rec)
 
+# Statin recs
+    
+if ten_yr_risk > 10 and statindose == 'Not taking':
+    if is_cad == False: 
+        statin_rec = 'Consider a statin for primary ASCVD prevention. The 10 year ASCVD risk is above 10.'
+        nextsteps.append(statin_rec)
+        
+if is_cad == True and statindose == 'Not taking':  
+    statin_rec = 'Given CAD, consider adding a statin for secondary ASCVD prevention.'
+    nextsteps.append(statin_rec)
 
 # Provide diabetes care considerations!
 
