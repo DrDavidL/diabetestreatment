@@ -443,6 +443,17 @@ st.write('Target HbA1c: ', + goalhba1c)
 
 st.write('Most recent HbA1c: ', + lasthba1c)
 
+if 19 < age < 80 and 89 < sbp < 201 and 129 < tchol < 321 and 19 < hdl < 101:
+    st.write('Calculated 10 year ASCVD risk is: ', round(ten_yr_risk,2))
+elif 20 > age or 80 < age:
+    st.write('Age is outside 20-80 range for ASCVD risk calculation.')
+elif 90 > sbp or 200 < sbp:
+    st.write('SBP is outside 90-200 mmHg range for ASCVD risk calculation.')
+elif 130 > tchol or 320 < tchol:
+    st.write('Total cholesterol is outside 130-320 mg/dL range for ASCVD risk calculation.')
+elif 20 > hdl or 100 < hdl:
+    st.write('HDL cholesterol is outside 20-100 mg/dL range for ASCVD risk calculation.')
+
 
 st.write('Current DM Medication Class Status:')
 
