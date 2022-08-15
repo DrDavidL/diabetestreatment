@@ -334,10 +334,10 @@ if lasthba1c > goalhba1c and glp1agonistdose != 'Contraindicated or intolerant' 
 # SGLT2i logic
 
 if lasthba1c > goalhba1c and sglt2idose != 'Contraindicated or intolerant' and sglt2idose != 'Max dose' and sglt2i_ok == True:
-    if sglt2idose == 'Not taking':
+    if sglt2idose == 'Not taking' and egfr > 29:
         sglt2i_rec = 'Consider starting an SGLT2 inhibitor (CHECK specific SGLT2i for eGFR dosing guidance.) RATIONALE: Above goal Hba1c, not yet taking it, and no contraindications.' 
         nextsteps.append(sglt2i_rec)
-        if is_ckd == True or egfr < 60:
+        if is_ckd == True or 30 < egfr < 60:
             sglt2i_rec = "SGLT2 inhibitor also suggested for reason of CKD."
             nextsteps.append(sglt2i_rec)
         if is_hf == True:
@@ -359,6 +359,10 @@ if dpp4idose == "Below max dose" or dpp4idose == 'Max dose':
     if glp1agonistdose == "Below max dose" or glp1agonistdose == 'Max dose':
         dpp4i_rec = "Stop DPP-4 inhibitor: The patient is on a GLP-1 agonist so there is no added benefit from the DPP-4 inhibitor."
         nextsteps.append(dpp4i_rec)
+    elif egfr < 59:
+        dpp4i_rec = "Renal function is abnormal. Ensure dpp4i dosing is appropriate for agent used."
+
+
 
 # Needs intolerant logic for metformin and SGLT2i.
             
@@ -370,8 +374,18 @@ if dpp4idose == "Not taking" or dpp4idose == 'Below max dose':
         if dpp4i_rec == 'Below max dose':
             dpp4i_rec = "Consider increasing the DPP-4 inhibitor dose. RATIONALE: Metformin dose is max, SGLT2i dose is max and adding a GLP-1 agonist is not possible."
             nextsteps.append(dpp4i_rec)
-        
 
+# Suflonylurea logic:
+
+if sulfonylureadose == 'Below max dose' or sulfonylureadose == 'Max dose':
+    if egfr < 60:
+        sulfonylurea_rec = "Renal function is abnormal. Ensure sulfonylurea dosing is appropriate. Review alternative agents better associated with improved outcomes." 
+        nextsteps.append(sulfonylurea_rec)
+    else:
+        sulfonylurea_rec = "Assess continued use of sulfonylurea in context of alternative agents better associated with improved outcomes." 
+        nextsteps.append(sulfonylurea_rec)
+        
+        
 # Here is weight loss surgery discussion with different cutoff for Asian American.
 
 considersurgery = False
