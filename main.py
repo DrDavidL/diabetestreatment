@@ -422,6 +422,12 @@ if is_htn == True:
         if egfr > 20 and egfr < 60:
             acearb_rec = 'Consider addition of an ACEI or ARB for HTN management in CKD. Dose adjust for eGFR per individual agent.'
             nextsteps.append(acearb_rec)
+            
+if is_proteinuria == True and isdiabetes == True:
+    if acearbdose == "Not taking":
+        if egfr > 20 and egfr < 60:
+            acearb_rec = 'Consider addition of an ACEI or ARB given presence of proteinuria and diabetes. Dose adjust for eGFR per individual agent.'
+            nextsteps.append(acearb_rec)
 
 # Aspirin Recs
 
