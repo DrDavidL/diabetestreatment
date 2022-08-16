@@ -216,7 +216,7 @@ is_proteinuria = st.sidebar.checkbox('Proteinuria: Select if at least over micro
 
 is_retinopathy = st.sidebar.checkbox('Retinopathy: Select if the patient has diabetic retinopathy.')
 
-
+is_osteoporosis = st.sidebar.checkbox('Osteoporosis: Select if the patient has osteoporosis.')
 
 
 
@@ -323,13 +323,16 @@ if lasthba1c > goalhba1c and glp1agonistdose != 'Contraindicated or intolerant' 
         if is_ckd == True or egfr < 60:
             glp1agonist_rec = "GLP-1 agonist also suggested for reason of CKD."
             nextsteps.append(glp1agonist_rec)
-        if bmi > 30:
-            glp1agonist_rec = "GLP-1 agonist also suggested for reason of obesity."
-            nextsteps.append(glp1agonist_rec)
     if glp1agonistdose == 'Below max dose':
         glp1agonist_rec = "Consider increasing GLP-1 agonist dose. RATIONALE: Above goal Hba1c, submaximal dose, and no contraindications."
         nextsteps.append(glp1agonist_rec)   
+if bmi >= 30:
+    glp1agonist_rec = "GLP-1 agonist also suggested for reason of obesity for BMI > 30."
+    nextsteps.append(glp1agonist_rec)
 
+if bmi >= 27 and bmi < 30 and isdiabetes == True:
+    glp1agonist_rec = "GLP-1 agonist also suggested since BMI >= 27 and diabetes is present."
+    nextsteps.append(glp1agonist_rec)
         
 # SGLT2i logic
 
@@ -389,7 +392,13 @@ if sulfonylureadose == 'Below max dose' or sulfonylureadose == 'Max dose':
     else:
         sulfonylurea_rec = "Assess continued use of sulfonylurea in context of alternative agents better associated with improved outcomes." 
         nextsteps.append(sulfonylurea_rec)
-        
+
+# Thiazolidinedione logic
+
+if thiazolidinedionedose == 'Below max dose' or thiazolidinedionedose == 'Max dose':
+    if is_osteoporosis == True: 
+        thiazolidinedione_rec = 'Consider stopping thiazolidinediones in presence of osteoporosis.'
+        nextsteps.append(thiazolidinedione_rec)
         
 # Here is weight loss surgery discussion with different cutoff for Asian American.
 
