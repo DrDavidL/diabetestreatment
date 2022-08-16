@@ -379,7 +379,7 @@ if dpp4idose == "Not taking" or dpp4idose == 'Below max dose':
 
 if sulfonylureadose == 'Below max dose' or sulfonylureadose == 'Max dose':
     if egfr < 60:
-        sulfonylurea_rec = "Renal function is abnormal. Ensure sulfonylurea dosing is appropriate. Review alternative agents better associated with improved outcomes." 
+        sulfonylurea_rec = "Renal function is abnormal. Ensure sulfonylurea dosing is appropriate. Consider maximizing alternative agents better associated with improved outcomes." 
         nextsteps.append(sulfonylurea_rec)
     else:
         sulfonylurea_rec = "Assess continued use of sulfonylurea in context of alternative agents better associated with improved outcomes." 
