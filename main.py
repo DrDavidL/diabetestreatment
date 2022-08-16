@@ -494,7 +494,7 @@ st.write("Review evidence [here.](https://professional.diabetes.org/sites/profes
 
 
 
-st.markdown('## *Summary for Goal and Existing Medications Prior to any Actions Above:*')
+st.markdown('## *Input Summary: A1c Goal, ASCVD Risk and Existing Medications Prior to any Changes:*')
 
 st.write('Target HbA1c: ', + goalhba1c)
 
