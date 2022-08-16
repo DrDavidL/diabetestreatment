@@ -283,7 +283,7 @@ statindose = st.sidebar.radio(
     ('Not taking', 'Below max dose', 'Max dose', 'Contraindicated or intolerant'))
     
 anti_platelet_therapydose = st.sidebar.radio(
-    "anti_platelet_therapy",
+    "Anti-platelet therapy",
     ('Not taking daily', 'Taking daily', 'Contraindicated or intolerant'))
         
 
@@ -532,7 +532,7 @@ st.write('Additional Medications of Interest:')
 
 st.markdown(' - ***ACEi or ARB:***  ' + acearbdose)
 st.markdown(' - ***Statin:***  ' + statindose)
-st.markdown(' - ***anti_platelet_therapy:***  ' + anti_platelet_therapydose)
+st.markdown(' - ***Anti-platelet therapy:***  ' + anti_platelet_therapydose)
 
 
 # st.markdown('### Summary of inputs:')
