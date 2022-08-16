@@ -347,6 +347,11 @@ if lasthba1c > goalhba1c and sglt2idose != 'Contraindicated or intolerant' and s
         sglt2i_rec = "Consider increasing SGLT2 inhibitor dose. RATIONALE: Above goal Hba1c, submaximal dose, and no contraindications."
         nextsteps.append(sglt2i_rec)   
 
+if sglt2idose == 'Not taking' and egfr > 29 and is_hf == True:
+    sglt2i_rec = 'Consider starting an SGLT2 inhibitor for heart failure independent of diabetes control. (CHECK specific SGLT2i for eGFR dosing guidance.) RATIONALE: Improved heart failure outcomes.' 
+    nextsteps.append(sglt2i_rec)    
+
+
 if sglt2i_ok == False:
     if sglt2idose == 'Max dose' or sglt2idose == 'Below max dose':
         sglt2i_rec = "Check whether the specific SGLT2i should continue with current eGFR."
