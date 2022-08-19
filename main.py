@@ -304,6 +304,12 @@ st.write(' ')
 nextsteps = []
 # When to use section.
 
+# Insulin - listed only if A1c > 11.
+
+if lasthba1c > 11 and is_insulin == False:    
+    insulin_rec = 'Last A1c value is > 11. Consider adding insulin with close clinical follow-up.'
+    nextsteps.append(insulin_rec)
+
 # Here is the metformin logic.
 # Based on eGFR and history variables: Don't start or escalate if < 45. Stop if already on and < 30.
 
@@ -472,6 +478,7 @@ if statindose == 'Not taking':
     if is_pad == True:  
         statin_rec = 'Statin: Given symptomatic PAD, consider adding a statin for secondary ASCVD prevention.'
         nextsteps.append(statin_rec)
+
 
 # Provide diabetes care considerations!
 
