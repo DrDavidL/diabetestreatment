@@ -417,7 +417,7 @@ if meglitinidedose == 'Below max dose' or meglitinidedose == 'Max dose':
         nextsteps.append(meglitinide_rec)
     else:
         meglitinide_rec = "Meglitinide: Assess continued use of meglitinide in context of alternative agents better associated with improved outcomes." 
-        nextsteps.append(sulfonylurea_rec)
+        nextsteps.append(meglitinide_rec)
 
 
 # Thiazolidinedione logic
@@ -475,7 +475,7 @@ if is_proteinuria == False and isdiabetes == True and is_htn == True:
             acearb_rec = 'ACEI/ARB: Discuss management with nephrologist regarding usage of ACEI/ARB with very low eGFR in context of DM, and HTN.'
             nextsteps.append(acearb_rec)
         if egfr >= 60:
-            acearb_rec = 'ACEI/ARB: Consider addition of an ACEI or ARB given presence of hypertension, and diabetes.'
+            acearb_rec = 'ACEI/ARB: Consider addition of an ACEI or ARB given presence of hypertension and diabetes.'
             nextsteps.append(acearb_rec)
  
             
