@@ -375,6 +375,7 @@ if sglt2i_ok == False:
     if sglt2idose == 'Max dose' or sglt2idose == 'Below max dose':
         sglt2i_rec = "SGLT2i: Check whether the specific SGLT2i should continue with current eGFR."
         nextsteps.append(sglt2i_rec)
+        
 
 # Here is DPP4 logic
 # If taking GLP-1 agonist and DPP4inh, the DPP4 should be stopped.
