@@ -323,6 +323,12 @@ st.write(' ')
 nextsteps = []
 # When to use section.
 
+# Insulin - listed only if A1c > 11.
+
+if lasthba1c > 11 and is_insulin == False:    
+    insulin_rec = 'Last A1c value is > 11. Consider adding insulin with close clinical follow-up.'
+    nextsteps.append(insulin_rec)
+
 # Here is the metformin logic.
 # Based on eGFR and history variables: Don't start or escalate if < 45. Stop if already on and < 30.
 
@@ -422,12 +428,33 @@ if sulfonylureadose == 'Below max dose' or sulfonylureadose == 'Max dose':
         sulfonylurea_rec = "Sulfonylurea: Assess continued use of sulfonylurea in context of alternative agents better associated with improved outcomes." 
         nextsteps.append(sulfonylurea_rec)
 
+# Meglitinide logic:
+
+if meglitinidedose == 'Below max dose' or meglitinidedose == 'Max dose':
+    if egfr < 60:
+        meglitinide_rec = "Meglitinide: Renal function is abnormal. Ensure meglitinide dosing is appropriate. Consider maximizing alternative agents better associated with improved outcomes." 
+        nextsteps.append(meglitinide_rec)
+    else:
+        meglitinide_rec = "Meglitinide: Assess continued use of meglitinide in context of alternative agents better associated with improved outcomes." 
+        nextsteps.append(meglitinide_rec)
+
+
 # Thiazolidinedione logic
 
 if thiazolidinedionedose == 'Below max dose' or thiazolidinedionedose == 'Max dose':
     if is_osteoporosis == True: 
         thiazolidinedione_rec = 'Thiazolidinedione: Consider stopping thiazolidinediones in presence of osteoporosis.'
         nextsteps.append(thiazolidinedione_rec)
+        
+# Alpha-glucosidase inhibitors
+
+if aglucosidaseinhdose == 'Below max dose' or aglucosidaseinhdose == 'Max dose':
+    if egfr < 60:
+        aglucosidaseinh_rec = "Alpha-Glucosidase Inhibitor: Renal function is abnormal. Ensure alpha-glucosidase inhibitor dosing is appropriate. Consider maximizing alternative agents better associated with improved outcomes." 
+        nextsteps.append(aglucosidaseinh_rec)
+    else:
+        aglucosidaseinh_rec = "Alpha-Glucosidase Inhibitor: Assess continued use of alpha-glucosidase inhibitor in context of alternative agents better associated with improved outcomes." 
+        nextsteps.append(aglucosidaseinh_rec)
         
 # Here is weight loss surgery discussion with different cutoff for Asian American.
 
@@ -446,17 +473,31 @@ if considersurgery == True:
 # ACEI and ARB 
 # Still needs proteinuria and other renal ranges covered.
 
-if is_htn == True:
+if is_proteinuria == True and isdiabetes == True and is_htn == True:
     if acearbdose == "Not taking":
         if egfr > 20 and egfr < 60:
-            acearb_rec = 'ACEI/ARB: Consider addition of an ACEI or ARB for HTN management in CKD. Dose adjust for eGFR per individual agent.'
+            acearb_rec = 'ACEI/ARB: Consider addition of an ACEI or ARB given presence of CKD, proteinuria, hypertension, and diabetes. Dose adjust for eGFR per individual agent.'
             nextsteps.append(acearb_rec)
+        if egfr <=20:
+            acearb_rec = 'ACEI/ARB: Discuss management with nephrologist regarding usage of ACEI/ARB with very low eGFR in context of proteinuria, DM, and HTN.'
+            nextsteps.append(acearb_rec)
+        if egfr >= 60:
+            acearb_rec = 'ACEI/ARB: Consider addition of an ACEI or ARB given presence of proteinuria, hypertension, and diabetes.'
+            nextsteps.append(acearb_rec)
+ 
+if is_proteinuria == False and isdiabetes == True and is_htn == True:
+    if acearbdose == "Not taking":
+        if egfr > 20 and egfr < 60:
+            acearb_rec = 'ACEI/ARB: Consider addition of an ACEI or ARB given presence of CKD, hypertension, and diabetes. Dose adjust for eGFR per individual agent.'
+            nextsteps.append(acearb_rec)
+        if egfr <=20:
+            acearb_rec = 'ACEI/ARB: Discuss management with nephrologist regarding usage of ACEI/ARB with very low eGFR in context of DM, and HTN.'
+            nextsteps.append(acearb_rec)
+        if egfr >= 60:
+            acearb_rec = 'ACEI/ARB: Consider addition of an ACEI or ARB given presence of hypertension and diabetes.'
+            nextsteps.append(acearb_rec)
+ 
             
-if is_proteinuria == True and isdiabetes == True:
-    if acearbdose == "Not taking":
-        if egfr > 20 and egfr < 60:
-            acearb_rec = 'ACEI/ARB: Consider addition of an ACEI or ARB given presence of proteinuria and diabetes. Dose adjust for eGFR per individual agent.'
-            nextsteps.append(acearb_rec)
 
 # anti-platelet therapy Recs
 
@@ -492,13 +533,17 @@ if statindose == 'Not taking':
         statin_rec = 'Statin: Given symptomatic PAD, consider adding a statin for secondary ASCVD prevention.'
         nextsteps.append(statin_rec)
 
+
 # Provide diabetes care considerations!
 
 
 st.markdown('## *Care Considerations:*')
 
 if is_possible_pregnant == True:
-    possible_preg_rec = 'Recommendations through this tool are not yet possible for pregnant or possibly pregnant patients.'
+    possible_preg_rec = """ Specific recommendations through this tool are not possible for pregnant or possibly pregnant patients. \
+        Most patients with type 2 diabetes are treated during pregnancy with multiple daily insulin injections. \
+        Metformin and possibly glyburide may be continued or utilized when sufficient. Specialist expertise should be sought for management. \
+    """
     nextsteps= []
     nextsteps.append(possible_preg_rec)
 
