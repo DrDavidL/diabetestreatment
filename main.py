@@ -177,7 +177,28 @@ st.sidebar.write('Calculated BMI is: ', round(bmi,1), 'If only BMI known, adjust
 
 # Set the egfr variable
 
+st.sidebar.write('If you do not know an eGFR value, use the eGFR slider to select a value in the appropriate CKD stage.')
+
+
 egfr = st.sidebar.slider("Last eGFR", min_value= 0.0, max_value = 120.0, value = 59.0)
+
+
+if egfr >= 90:
+    ckd_stage = '1 (eGFR > 90)'
+if egfr >= 60 and egfr <90:
+    ckd_stage = '2 (eGFR 60-89)'
+if egfr >= 45 and egfr <60:
+    ckd_stage = '3a (eGFR 45-59)'
+if egfr >=30 and egfr < 45:
+    ckd_stage = '3b (eGFR 30-44)'
+if egfr >=15 and egfr < 30:
+    ckd_stage = '4 (eGFR 15-29)'
+if egfr < 15:
+    ckd_stage = '5 (eGFR < 15)'
+
+st.sidebar.write('CKD stage  is: ', ckd_stage)
+
+is_proteinuria = st.sidebar.checkbox('Proteinuria: Select if at least over microalbuminuria threshold.')
 
 high_hypoglyc_risk = st.sidebar.radio(
     "High Hypoglycemia Risk",
@@ -216,13 +237,11 @@ is_cad = st.sidebar.checkbox('CAD: Select if the patient had a prior cardiovascu
 
 is_cva = st.sidebar.checkbox('CVA: Select if the patient had a prior cerebrovascular event.')
 
-is_ckd = st.sidebar.checkbox('CKD: Select if the patient has chronic kidney disease.')
-
 is_pad = st.sidebar.checkbox('PAD: Select if the patient has symptomatic peripheral arterial disease.')
 
 is_hf = st.sidebar.checkbox('Heart Failure: Select if the patient has a hstory of heart failure.')
 
-is_proteinuria = st.sidebar.checkbox('Proteinuria: Select if at least over microalbuminuria threshold.')
+
 
 is_retinopathy = st.sidebar.checkbox('Retinopathy: Select if the patient has diabetic retinopathy.')
 
@@ -330,7 +349,7 @@ if lasthba1c > goalhba1c and glp1agonistdose != 'Contraindicated or intolerant' 
     if glp1agonistdose == 'Not taking' and metformindose =='Max dose' and dpp4idose == 'Not taking':
         glp1agonist_rec = 'GLP-1 agonist: Consider starting. RATIONALE: Above goal Hba1c, metformin is at maximal dose, and no use of DPP-4 inhibitor.' 
         nextsteps.append(glp1agonist_rec)
-        if is_ckd == True or egfr < 60:
+        if egfr < 60:
             glp1agonist_rec = "GLP-1 agonist: Consider for reason of CKD."
             nextsteps.append(glp1agonist_rec)
     if glp1agonistdose == 'Below max dose':
@@ -350,7 +369,7 @@ if lasthba1c > goalhba1c and sglt2idose != 'Contraindicated or intolerant' and s
     if sglt2idose == 'Not taking' and egfr > 29:
         sglt2i_rec = 'SGLT2i: Consider starting an SGLT2 inhibitor (CHECK specific SGLT2i for eGFR dosing guidance.) RATIONALE: Above goal Hba1c, not yet taking it, and no contraindications.' 
         nextsteps.append(sglt2i_rec)
-        if is_ckd == True or 30 < egfr < 60:
+        if 30 < egfr < 60:
             sglt2i_rec = "SGLT2i: SGLT2 inhibitor also suggested for reason of CKD."
             nextsteps.append(sglt2i_rec)
         if is_hf == True:
@@ -564,8 +583,7 @@ st.markdown(' - ***Anti-platelet therapy:***  ' + anti_platelet_therapydose)
 # else:
 #     st.write("Without stroke hstory")
     
-# if is_ckd:
-#     st.write("With chronic kidney disease")
+
 # else:
 #     st.write("Without CKD")
     
