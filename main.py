@@ -41,6 +41,29 @@ elif goalhba1c == '8':
 
 lasthba1c = st.sidebar.slider("Select the most recent HbA1c", min_value= 3.0, max_value = 15.0, value = 7.5)
 
+# st.sidebar.write("""Enter continuous glucose monitor values. 70% percent of readings in range \
+#     for non-pregnant adults corresponds to an A1C of 7%. \
+#         Time below range should be < 4% and time < 54 should be < 1%. \
+#     """)
+
+# tar_level2_hyper = st.sidebar.slider("Percent of readings > 250 mg/dl", min_value= 0, max_value = 100, value = 10)
+
+# tar_level1_hyper = st.sidebar.slider("Percent of readings 181 - 250 mg/dl", min_value= 0, max_value = 100, value = 10)
+
+
+
+# tbr_level1_hypo = st.sidebar.slider("Percent of readings 54-69 mg/dl", min_value= 0, max_value = 100, value = 10)
+
+# tbr_level2_hypo = st.sidebar.slider("Percent of readings < 54 mg/dl", min_value= 0, max_value = 100, value = 10)
+
+
+# tir = 100 - tar_level1_hyper - tar_level2_hyper - tbr_level1_hypo - tbr_level2_hypo
+
+# if tir < 0:
+#     tir = 0
+
+# st.sidebar.write('Percent of readings in range 70-180 mg/dl is', tir)
+
 # Pooled Cohort ASCVD Risk Calculation Components
     
 sex = st.sidebar.radio(
@@ -317,7 +340,11 @@ if metformin_ok == False:
     if metformindose == 'Max dose' or metformindose == 'Below max dose':
         metformin_rec = "Metformin: STOP the metformin -- check the eGFR value."
         nextsteps.append(metformin_rec)
-        
+
+if metformindose == 'Max dose' or metformindose == 'Below max dose':
+    metformin_rec = 'Metformin: Consider periodically checking vitamin B12 levels. Rationale: Long-term usage is associated with B12 deficiency.'
+    nextsteps.append(metformin_rec)
+            
 # GLP1 Logic
 
 if lasthba1c > goalhba1c and glp1agonistdose != 'Contraindicated or intolerant' and glp1agonistdose != 'Max dose':
